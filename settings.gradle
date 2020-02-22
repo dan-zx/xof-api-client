@@ -1,0 +1,3 @@
+rootProject.name = 'xof-api'
+
+include 'xof-api-client'
