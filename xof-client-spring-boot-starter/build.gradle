@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+ext.jacocoExcludes = []
+
+dependencies {
+    api project(':xof-client-impl')
+
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
+
+    annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor:$springBootVersion"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+}

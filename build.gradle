@@ -43,6 +43,7 @@ subprojects {
         okHttpVersion = '3.14.7'
         retrofitVersion = '2.7.2'
         slf4jVersion = '1.7.30'
+        springBootVersion = '2.2.5.RELEASE'
     }
 
     dependencies {

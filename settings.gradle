@@ -2,3 +2,4 @@ rootProject.name = 'xof-api'
 
 include 'xof-client'
 include 'xof-client-impl'
+include 'xof-client-spring-boot-starter'
