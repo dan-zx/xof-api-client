@@ -1,3 +1,4 @@
 rootProject.name = 'xof-api'
 
 include 'xof-client'
+include 'xof-client-impl'
