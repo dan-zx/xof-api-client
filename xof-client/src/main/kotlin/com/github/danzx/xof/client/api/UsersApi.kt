@@ -11,9 +11,9 @@ import com.github.danzx.xof.client.dto.response.Page
 
 interface UsersApi : BaseApi<User, CreateUserRequest> {
     fun getByUsername(username: String): User?
-    fun replace(request: ReplaceUserRequest): User
+    fun replace(id: Long, request: ReplaceUserRequest): User
     fun getComments(id: Long, pagination: Pagination? = null): Page<Comment>
     fun getPosts(id: Long, pagination: Pagination? = null): Page<Post>
-    fun applyVoteOnComment(id: Long, commentId: Long, vote: Vote.Direction)
-    fun applyVoteOnPost(id: Long, postId: Long, vote: Vote.Direction)
+    fun voteOnComment(userId: Long, commentId: Long, vote: Vote.Direction)
+    fun voteOnPost(userId: Long, postId: Long, vote: Vote.Direction)
 }
