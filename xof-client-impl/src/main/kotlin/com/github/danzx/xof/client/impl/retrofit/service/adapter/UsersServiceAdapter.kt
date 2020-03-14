@@ -11,11 +11,11 @@ import com.github.danzx.xof.client.impl.retrofit.ext.get
 import com.github.danzx.xof.client.impl.retrofit.ext.getOrNullOnNotFound
 import com.github.danzx.xof.client.impl.retrofit.service.UsersService
 
-class UsersApiRetrofitAdapter(private val usersService: UsersService) : UsersApi {
+class UsersServiceAdapter(private val usersService: UsersService) : UsersApi {
     override fun getById(id: Long) = usersService.getById(id).getOrNullOnNotFound()
     override fun getByUsername(username: String) = usersService.getByUsername(username).getOrNullOnNotFound()
-    override fun replace(id: Long, request: ReplaceUserRequest) = usersService.replace(id, request).get()
     override fun create(request: CreateUserRequest) = usersService.create(request).get()
+    override fun replace(id: Long, request: ReplaceUserRequest) = usersService.replace(id, request).get()
     override fun delete(id: Long) = usersService.delete(id).call()
     override fun getComments(id: Long, pagination: Pagination?) = usersService.getComments(id, pagination?.page, pagination?.size).get()
     override fun getPosts(id: Long, pagination: Pagination?) = usersService.getPosts(id, pagination?.page, pagination?.size).get()
