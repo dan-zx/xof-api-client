@@ -6,5 +6,7 @@ ext.jacocoExcludes = []
 
 dependencies {
     api project(':xof-client')
+    api "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
     api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    api "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
 }

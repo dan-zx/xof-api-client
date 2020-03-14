@@ -40,6 +40,7 @@ subprojects {
         kxdateVersion = '1.0.0'
         logbackVersion = '1.2.3'
         mockkVersion = '1.9.3'
+        okHttpVersion = '3.14.7'
         retrofitVersion = '2.7.2'
         slf4jVersion = '1.7.30'
     }
