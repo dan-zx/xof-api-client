@@ -6,6 +6,6 @@ import com.github.danzx.xof.client.dto.request.Pagination
 import com.github.danzx.xof.client.dto.response.Page
 
 interface CommentsApi : BaseApi<Comment, CreateCommentRequest>{
-    fun findReplays(id: Long, pagination: Pagination? = null): Page<Comment>
     fun replaceContent(id: Long, content: String): Comment
+    fun getReplays(id: Long, pagination: Pagination? = null): Page<Comment>
 }
