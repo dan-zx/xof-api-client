@@ -1,4 +1,4 @@
-package com.github.xof.client.spring.boot.autoconfiguration
+package com.github.danzx.xof.client.spring.boot.autoconfiguration
 
 import com.github.danzx.xof.client.XofClientFactory
 import com.github.danzx.xof.client.impl.retrofit.XofClientRetrofitFactory
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableConfigurationProperties(XofClientProperties::class)
-class XofClientConfiguration(private val properties: XofClientProperties) {
+class XofClientAutoConfiguration(private val properties: XofClientProperties) {
 
     @Bean
     @ConditionalOnMissingBean

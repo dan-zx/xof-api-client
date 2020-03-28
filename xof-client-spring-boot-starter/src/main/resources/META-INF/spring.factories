@@ -1,0 +1,2 @@
+# Spring Boot Auto-configuration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.danzx.xof.client.spring.boot.autoconfiguration.XofClientAutoConfiguration
