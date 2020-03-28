@@ -2,10 +2,10 @@ package com.github.danzx.xof.client.impl.retrofit.service.adapter
 
 import com.github.danzx.xof.client.dto.User
 import com.github.danzx.xof.client.dto.Vote
-import com.github.danzx.xof.client.dto.request.CreateUserRequest
-import com.github.danzx.xof.client.dto.request.ReplaceUserRequest
-import com.github.danzx.xof.client.dto.request.VoteRequest
 import com.github.danzx.xof.client.dto.response.Page
+import com.github.danzx.xof.client.impl.retrofit.ext.toCreateRequest
+import com.github.danzx.xof.client.impl.retrofit.ext.toReplaceRequest
+import com.github.danzx.xof.client.impl.retrofit.ext.toRequest
 import com.github.danzx.xof.client.impl.retrofit.service.UsersService
 import com.github.danzx.xof.client.impl.retrofit.test.ext.successfulResponse
 import com.github.danzx.xof.client.impl.retrofit.test.ext.of
@@ -84,7 +84,7 @@ class UsersServiceAdapterTest {
     @Test
     fun `should create() return response body when service returns success response`() {
         val expected = UserObjectMother.createUser()
-        val request = CreateUserRequest(expected.name, expected.lastName, expected.username, expected.avatarImageUrl)
+        val request = expected.toCreateRequest()
 
         every { usersService.create(request) } returns response(expected)
 
@@ -103,7 +103,7 @@ class UsersServiceAdapterTest {
                 username = "NewUsername",
                 avatarImageUrl = "NewAvatarImageUrl"
             )
-        val request = ReplaceUserRequest(expected.name, expected.lastName, expected.username, expected.avatarImageUrl)
+        val request = expected.toReplaceRequest()
 
         every { usersService.replace(expected.id, request) } returns response(expected)
 
@@ -154,12 +154,13 @@ class UsersServiceAdapterTest {
         val userId = 1L
         val commentId = 1L
         val vote = Vote.Direction.UP
+        val voteRequest = vote.toRequest()
 
-        every { usersService.voteOnComment(userId, commentId, VoteRequest(vote)) } returns successfulResponse()
+        every { usersService.voteOnComment(userId, commentId, voteRequest) } returns successfulResponse()
 
         adapter.voteOnComment(userId, commentId, vote)
 
-        verify { usersService.voteOnComment(userId, commentId, VoteRequest(vote)) }
+        verify { usersService.voteOnComment(userId, commentId, voteRequest) }
     }
 
     @Test
@@ -167,11 +168,12 @@ class UsersServiceAdapterTest {
         val userId = 1L
         val postId = 1L
         val vote = Vote.Direction.DOWN
+        val voteRequest = vote.toRequest()
 
-        every { usersService.voteOnPost(userId, postId, VoteRequest(vote)) } returns successfulResponse()
+        every { usersService.voteOnPost(userId, postId, voteRequest) } returns successfulResponse()
 
         adapter.voteOnPost(userId, postId, vote)
 
-        verify { usersService.voteOnPost(userId, postId, VoteRequest(vote)) }
+        verify { usersService.voteOnPost(userId, postId, voteRequest) }
     }
 }

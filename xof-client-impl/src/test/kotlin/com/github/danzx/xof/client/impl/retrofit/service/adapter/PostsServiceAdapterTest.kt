@@ -1,10 +1,10 @@
 package com.github.danzx.xof.client.impl.retrofit.service.adapter
 
 import com.github.danzx.xof.client.dto.Post
-import com.github.danzx.xof.client.dto.request.ContentUpdateRequest
 import com.github.danzx.xof.client.dto.request.CreatePostRequest
-import com.github.danzx.xof.client.dto.request.TitleUpdateRequest
 import com.github.danzx.xof.client.dto.response.Page
+import com.github.danzx.xof.client.impl.retrofit.ext.toContentUpdateRequest
+import com.github.danzx.xof.client.impl.retrofit.ext.toTitleUpdateRequest
 import com.github.danzx.xof.client.impl.retrofit.service.PostsService
 import com.github.danzx.xof.client.impl.retrofit.test.ext.of
 import com.github.danzx.xof.client.impl.retrofit.test.ext.successfulResponse
@@ -86,7 +86,7 @@ class PostsServiceAdapterTest {
     fun `should replaceTitle() return response body when service returns success response`() {
         val expected = PostObjectMother.createPost().copy(title = "new title")
 
-        every { postsService.replaceTitle(expected.id, TitleUpdateRequest(expected.title)) } returns response(expected)
+        every { postsService.replaceTitle(expected.id, expected.title.toTitleUpdateRequest()) } returns response(expected)
 
         val actual = adapter.replaceTitle(expected.id, expected.title)
 
@@ -97,7 +97,7 @@ class PostsServiceAdapterTest {
     fun `should replaceContent() return response body when service returns success response`() {
         val expected = PostObjectMother.createPost().copy(content = "new content")
 
-        every { postsService.replaceContent(expected.id, ContentUpdateRequest(expected.content)) } returns response(expected)
+        every { postsService.replaceContent(expected.id, expected.content.toContentUpdateRequest()) } returns response(expected)
 
         val actual = adapter.replaceContent(expected.id, expected.content)
 

@@ -1,9 +1,9 @@
 package com.github.danzx.xof.client.impl.retrofit.service.adapter
 
 import com.github.danzx.xof.client.dto.Comment
-import com.github.danzx.xof.client.dto.request.ContentUpdateRequest
 import com.github.danzx.xof.client.dto.request.CreateCommentRequest
 import com.github.danzx.xof.client.dto.response.Page
+import com.github.danzx.xof.client.impl.retrofit.ext.toContentUpdateRequest
 import com.github.danzx.xof.client.impl.retrofit.service.CommentsService
 import com.github.danzx.xof.client.impl.retrofit.test.ext.of
 import com.github.danzx.xof.client.impl.retrofit.test.ext.successfulResponse
@@ -70,7 +70,7 @@ class CommentsServiceAdapterTest {
     fun `should replaceContent() return response body when service returns success response`() {
         val expected = CommentObjectMother.createComment().copy(content = "new content")
 
-        every { commentsService.replaceContent(expected.id, ContentUpdateRequest(expected.content)) } returns response(expected)
+        every { commentsService.replaceContent(expected.id, expected.content.toContentUpdateRequest()) } returns response(expected)
 
         val actual = adapter.replaceContent(expected.id, expected.content)
 

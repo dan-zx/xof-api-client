@@ -1,13 +1,13 @@
 package com.github.danzx.xof.client.impl.retrofit.service.adapter
 
 import com.github.danzx.xof.client.api.PostsApi
-import com.github.danzx.xof.client.dto.request.ContentUpdateRequest
 import com.github.danzx.xof.client.dto.request.CreatePostRequest
 import com.github.danzx.xof.client.dto.request.Pagination
-import com.github.danzx.xof.client.dto.request.TitleUpdateRequest
 import com.github.danzx.xof.client.impl.retrofit.ext.call
 import com.github.danzx.xof.client.impl.retrofit.ext.get
 import com.github.danzx.xof.client.impl.retrofit.ext.getOrNullOnNotFound
+import com.github.danzx.xof.client.impl.retrofit.ext.toContentUpdateRequest
+import com.github.danzx.xof.client.impl.retrofit.ext.toTitleUpdateRequest
 import com.github.danzx.xof.client.impl.retrofit.service.PostsService
 
 class PostsServiceAdapter(private val postsService: PostsService) : PostsApi {
@@ -18,9 +18,9 @@ class PostsServiceAdapter(private val postsService: PostsService) : PostsApi {
 
     override fun create(request: CreatePostRequest) = postsService.create(request).get()
 
-    override fun replaceTitle(id: Long, title: String) = postsService.replaceTitle(id, TitleUpdateRequest(title)).get()
+    override fun replaceTitle(id: Long, title: String) = postsService.replaceTitle(id, title.toTitleUpdateRequest()).get()
 
-    override fun replaceContent(id: Long, content: String) = postsService.replaceContent(id, ContentUpdateRequest(content)).get()
+    override fun replaceContent(id: Long, content: String) = postsService.replaceContent(id, content.toContentUpdateRequest()).get()
 
     override fun delete(id: Long) = postsService.delete(id).call()
 
