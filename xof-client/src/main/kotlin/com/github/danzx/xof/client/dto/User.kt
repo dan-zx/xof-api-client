@@ -8,8 +8,8 @@ data class User(
     var lastName: String,
     var username: String,
     var avatarImageUrl: String,
-    var join: LocalDateTime)
+    var join: LocalDateTime) { companion object }
 
 data class SimpleUser(
     var id: Long,
-    var username: String)
+    var username: String) { companion object }

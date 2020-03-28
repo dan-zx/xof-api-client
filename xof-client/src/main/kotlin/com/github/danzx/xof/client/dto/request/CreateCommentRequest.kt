@@ -4,4 +4,4 @@ data class CreateCommentRequest(
     var content: String,
     var userId: Long,
     var postId: Long,
-    var parentId: Long? = null)
+    var parentId: Long? = null) { companion object }

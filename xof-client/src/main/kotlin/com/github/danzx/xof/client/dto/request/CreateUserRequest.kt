@@ -4,4 +4,4 @@ data class CreateUserRequest(
     var name: String,
     var lastName: String,
     var username: String,
-    var avatarImageUrl: String)
+    var avatarImageUrl: String) { companion object }

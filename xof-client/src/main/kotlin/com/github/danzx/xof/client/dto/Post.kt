@@ -9,4 +9,4 @@ data class Post(
     var created: LocalDateTime,
     var updated: LocalDateTime,
     var user: SimpleUser,
-    var votes: Long)
+    var votes: Long) { companion object }

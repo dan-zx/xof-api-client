@@ -10,4 +10,4 @@ data class Comment(
     var user: SimpleUser,
     var postId: Long,
     var parentId: Long?,
-    var votes: Long)
+    var votes: Long) { companion object }
