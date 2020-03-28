@@ -8,7 +8,9 @@ data class Vote(
     enum class Direction(val value: Int) {
         DOWN(-1),
         ZERO(0),
-        UP(+1)
+        UP(+1);
+
+        companion object
     }
 
     companion object
