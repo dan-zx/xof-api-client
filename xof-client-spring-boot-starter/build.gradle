@@ -6,7 +6,7 @@ plugins {
 ext.jacocoExcludes = []
 
 dependencies {
-    api project(':xof-client-impl')
+    api project(':xof-client-core')
 
     compileOnly "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
 
