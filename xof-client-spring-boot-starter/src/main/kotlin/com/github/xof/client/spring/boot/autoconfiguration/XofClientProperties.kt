@@ -1,8 +1,9 @@
 package com.github.xof.client.spring.boot.autoconfiguration
 
-import com.github.danzx.xof.client.XofClientConfiguration
+import com.github.danzx.xof.client.configuration.XofClientConfiguration
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
+
 import java.time.Duration
 
 @ConstructorBinding
@@ -10,7 +11,8 @@ import java.time.Duration
 data class XofClientProperties(
     override val connection: XofClientConfiguration.Connection = ConnectionProperties(),
     override val logger: XofClientConfiguration.Logger = LoggerProperties(),
-    override val cache: XofClientConfiguration.Cache = CacheProperties()) : XofClientConfiguration {
+    override val cache: XofClientConfiguration.Cache = CacheProperties(),
+    override val baseUrl: String) : XofClientConfiguration {
 
     class ConnectionProperties(
         override val readTimeout: Duration = Duration.ofSeconds(10),
