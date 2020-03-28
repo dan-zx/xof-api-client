@@ -2,4 +2,9 @@ plugins {
     id 'java-library'
 }
 
-ext.jacocoExcludes = []
+ext.jacocoExcludes = [
+        '**/dto/*',
+        '**/exceptions/*',
+        '**/XofClient*',
+        '**/XofClientFactory*'
+]
