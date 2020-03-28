@@ -1,11 +1,14 @@
 package com.github.danzx.xof.client.impl.retrofit.service.adapter
 
+import com.github.danzx.xof.client.dto.Comment
 import com.github.danzx.xof.client.dto.request.ContentUpdateRequest
 import com.github.danzx.xof.client.dto.request.CreateCommentRequest
 import com.github.danzx.xof.client.dto.response.Page
 import com.github.danzx.xof.client.impl.retrofit.service.CommentsService
 import com.github.danzx.xof.client.impl.retrofit.test.ext.of
+import com.github.danzx.xof.client.impl.retrofit.test.ext.successfulResponse
 import com.github.danzx.xof.client.impl.retrofit.test.factory.CommentObjectMother
+import com.github.danzx.xof.client.impl.retrofit.test.factory.ErrorObjectMother
 import com.github.danzx.xof.client.impl.retrofit.test.factory.PaginationObjectMother
 
 import io.kotlintest.shouldBe
@@ -41,6 +44,17 @@ class CommentsServiceAdapterTest {
     }
 
     @Test
+    fun `should getById() return null when service returns 404`() {
+        val error = ErrorObjectMother.createJsonNotFoundError<Comment>()
+
+        every { commentsService.getById(any()) } returns response(error)
+
+        val actual = adapter.getById(1)
+
+        actual shouldBe null
+    }
+
+    @Test
     fun `should create() return response body when service returns success response`() {
         val expected = CommentObjectMother.createComment()
         val request = CreateCommentRequest(expected.content, expected.user.id, expected.postId, expected.parentId)
@@ -49,19 +63,17 @@ class CommentsServiceAdapterTest {
 
         val actual = adapter.create(request)
 
-        actual shouldNotBe null
         actual shouldBe expected
     }
 
     @Test
     fun `should replaceContent() return response body when service returns success response`() {
-        val expected = CommentObjectMother.createComment()
+        val expected = CommentObjectMother.createComment().copy(content = "new content")
 
         every { commentsService.replaceContent(expected.id, ContentUpdateRequest(expected.content)) } returns response(expected)
 
         val actual = adapter.replaceContent(expected.id, expected.content)
 
-        actual shouldNotBe null
         actual shouldBe expected
     }
 
@@ -69,7 +81,7 @@ class CommentsServiceAdapterTest {
     fun `should delete() just runs when service returns success response`() {
         val requestId = 1L
 
-        every { commentsService.delete(requestId) } returns response(Unit)
+        every { commentsService.delete(requestId) } returns successfulResponse()
 
         adapter.delete(requestId)
 
