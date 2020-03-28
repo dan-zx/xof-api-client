@@ -1,8 +1,8 @@
 package com.github.danzx.xof.client.impl.retrofit
 
 import com.github.danzx.xof.client.XofClient
-import com.github.danzx.xof.client.XofClientConfiguration
 import com.github.danzx.xof.client.XofClientFactory
+import com.github.danzx.xof.client.configuration.XofClientConfiguration
 import com.github.danzx.xof.client.impl.retrofit.service.CommentsService
 import com.github.danzx.xof.client.impl.retrofit.service.PostsService
 import com.github.danzx.xof.client.impl.retrofit.service.UsersService
@@ -35,6 +35,7 @@ class XofClientRetrofitFactory(configuration: XofClientConfiguration) : XofClien
     private fun buildRetrofit() = 
         Retrofit.Builder()
             .addConverterFactory(JacksonConverterFactory.create())
+            .baseUrl(configuration.baseUrl)
             .client(buildOkHttpClient())
             .build()
 
