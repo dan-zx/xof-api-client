@@ -9,10 +9,7 @@ data class LoggerConfigImpl(
     override val level: Level) : Logger
 
 class LoggerConfigBuilder {
-    private var level = NONE
-
-    val Level.logs: Unit
-        get() { level = this }
+    var level = NONE
 
     fun build(): Logger = LoggerConfigImpl(true, level)
 }

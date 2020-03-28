@@ -1,8 +1,9 @@
 package com.github.danzx.xof.client.dto.request
 
-import com.github.danzx.xof.client.dto.Vote
+import com.github.danzx.xof.client.dto.SingleValueHolder
+import com.github.danzx.xof.client.dto.Vote.Direction
 
 typealias ReplaceUserRequest = CreateUserRequest
-typealias ContentUpdateRequest = SingleValueRequest<String>
-typealias TitleUpdateRequest = SingleValueRequest<String>
-typealias VoteRequest = SingleValueRequest<Vote.Direction>
+typealias ContentUpdateRequest = SingleValueHolder<String>
+typealias TitleUpdateRequest = SingleValueHolder<String>
+typealias VoteRequest = SingleValueHolder<Direction>

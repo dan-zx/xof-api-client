@@ -25,5 +25,17 @@ object ErrorObjectMother {
                 "status": 404,
                 "timestamp": "2020-03-28T11:55:18"
              }
-             """))
+             """.trimIndent()))
+
+    fun <T> createJsonInternalServerError() =
+        error<T>(500, ResponseBody.create(APPLICATION_JSON,
+            """
+             {
+                "error": "Internal Server Error",
+                "message": "Internal Server Error",
+                "path": "/api/mock",
+                "status": 404,
+                "timestamp": "2020-03-28T11:55:18"
+             }
+             """.trimIndent()))
 }

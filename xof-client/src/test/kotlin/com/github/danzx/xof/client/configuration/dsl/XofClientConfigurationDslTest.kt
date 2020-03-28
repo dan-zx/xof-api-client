@@ -22,7 +22,7 @@ class XofClientConfigurationDslTest : StringSpec({
                 callTimeout = 100.nanoseconds
             }
             baseUrl = "http://localhost:8080/"
-            logger { BASIC.logs }
+            logger { level = BASIC }
             cache { 20.megabytes }
         }
 
