@@ -15,9 +15,9 @@ class CommentsServiceAdapter(private val commentsService: CommentsService) : Com
 
     override fun create(request: CreateCommentRequest) = commentsService.create(request).get()
 
-    override fun delete(id: Long) = commentsService.delete(id).call()
-
     override fun replaceContent(id: Long, content: String) = commentsService.replaceContent(id, ContentUpdateRequest(content)).get()
+
+    override fun delete(id: Long) = commentsService.delete(id).call()
 
     override fun getReplays(id: Long, pagination: Pagination?) = commentsService.getReplays(id, pagination?.page, pagination?.size).get()
 }
