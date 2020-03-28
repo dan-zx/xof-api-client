@@ -16,7 +16,7 @@ class PaginationBuilder {
         number = value
     }
 
-    fun build() = Pagination(size, number)
+    fun build() = Pagination(size = size, page = number)
 }
 
 fun paginationWith(actions: PaginationBuilder.() -> Unit) : Pagination {
