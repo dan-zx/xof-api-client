@@ -2,16 +2,13 @@ package com.github.danzx.xof.client.impl.retrofit.ext
 
 import com.github.danzx.xof.client.exceptions.XofApiException
 import com.github.danzx.xof.client.exceptions.XofClientException
-import com.github.danzx.xof.client.impl.retrofit.test.MediaTypes
+import com.github.danzx.xof.client.impl.retrofit.test.factory.ErrorObjectMother
 
 import io.kotlintest.matchers.types.shouldBeSameInstanceAs
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldThrow
 import io.kotlintest.specs.StringSpec
 
-import okhttp3.ResponseBody.create
-
-import retrofit2.Response.error
 import retrofit2.mock.Calls.response
 
 class CallExtensionsTest : StringSpec({
@@ -31,7 +28,8 @@ class CallExtensionsTest : StringSpec({
     }
 
     "should getOrNullOnNotFound() return null result when response is 404" {
-        val actual = response(error<Any>(404, create(MediaTypes.TEXT_PLAIN, "Not found"))).getOrNullOnNotFound()
+        val error = ErrorObjectMother.createTextPlainNotFoundError<Any>()
+        val actual = response(error).getOrNullOnNotFound()
 
         actual shouldBe null
     }
@@ -41,11 +39,12 @@ class CallExtensionsTest : StringSpec({
     }
 
     "should get() throw XofApiException when response is not successful" {
-        shouldThrow<XofApiException> { response(error<Any>(500, create(MediaTypes.TEXT_PLAIN, "Server error"))).get() }
+        val error = ErrorObjectMother.createTextPlainInternalServerError<Any>()
+        shouldThrow<XofApiException> { response(error).get() }
     }
 
     "should getOrNullOnNotFound() throw XofApiException when response is not successful" {
-        shouldThrow<XofApiException> { response(error<Any>(500, create(MediaTypes.TEXT_PLAIN, "Server error"))).getOrNullOnNotFound() }
+        val error = ErrorObjectMother.createTextPlainInternalServerError<Any>()
+        shouldThrow<XofApiException> { response(error).getOrNullOnNotFound() }
     }
-
 })
