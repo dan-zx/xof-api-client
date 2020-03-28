@@ -1,6 +1,7 @@
 package com.github.danzx.xof.client.configuration.dsl
 
 import com.github.danzx.xof.client.configuration.XofClientConfiguration.Logger.Level.BASIC
+import com.github.danzx.xof.client.ext.megabytes
 
 import io.kotlintest.should
 import io.kotlintest.shouldBe
@@ -23,7 +24,7 @@ class XofClientConfigurationDslTest : StringSpec({
             }
             baseUrl = "http://localhost:8080/"
             logger { level = BASIC }
-            cache { 20.megabytes }
+            cache { size = 20.megabytes }
         }
 
         config.baseUrl shouldBe "http://localhost:8080/"
@@ -42,7 +43,7 @@ class XofClientConfigurationDslTest : StringSpec({
 
         config.cache should {
             it.isEnabled shouldBe true
-            it.cacheMaxSizeInBytes shouldBe 20L * 1024L * 1024L
+            it.sizeInBytes shouldBe 20.megabytes
         }
     }
 })

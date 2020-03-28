@@ -66,7 +66,7 @@ class XofClientRetrofitFactory(configuration: XofClientConfiguration) : XofClien
 
     private fun configureCache(okHttpClientBuilder: OkHttpClient.Builder) {
         val tempDirectory = File.createTempFile("okhttp-cache", ".tmp")
-        val cache = Cache(tempDirectory, configuration.cache.cacheMaxSizeInBytes)
+        val cache = Cache(tempDirectory, configuration.cache.sizeInBytes)
         okHttpClientBuilder.cache(cache)
     }
 

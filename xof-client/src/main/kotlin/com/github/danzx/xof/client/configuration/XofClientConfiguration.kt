@@ -25,6 +25,6 @@ interface XofClientConfiguration {
 
     interface Cache {
         val isEnabled: Boolean
-        val cacheMaxSizeInBytes: Long
+        val sizeInBytes: Long
     }
 }
