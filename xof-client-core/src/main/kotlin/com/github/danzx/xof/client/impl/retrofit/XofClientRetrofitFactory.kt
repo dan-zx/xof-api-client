@@ -2,6 +2,7 @@ package com.github.danzx.xof.client.impl.retrofit
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 
 import com.github.danzx.xof.client.XofClient
 import com.github.danzx.xof.client.XofClientFactory
@@ -42,7 +43,10 @@ class XofClientRetrofitFactory(configuration: XofClientConfiguration) : XofClien
             .build()
 
     private fun buildJsonConverterFactory() =
-        JacksonConverterFactory.create(ObjectMapper().registerModule(JavaTimeModule()))
+        JacksonConverterFactory.create(
+            ObjectMapper()
+                .registerModule(KotlinModule())
+                .registerModule(JavaTimeModule()))
 
     private fun buildOkHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
