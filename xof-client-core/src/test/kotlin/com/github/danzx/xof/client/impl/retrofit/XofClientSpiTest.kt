@@ -3,7 +3,6 @@ package com.github.danzx.xof.client.impl.retrofit
 import com.github.danzx.xof.client.XofClient
 import com.github.danzx.xof.client.configuration.XofClientConfiguration.Logger.Level.BASIC
 import com.github.danzx.xof.client.ext.megabytes
-import io.kotlintest.shouldBe
 
 import io.kotlintest.shouldNotBe
 import io.kotlintest.specs.StringSpec
@@ -12,14 +11,15 @@ import ru.yole.kxdate.minutes
 import ru.yole.kxdate.nanoseconds
 import ru.yole.kxdate.seconds
 
-class XofClientSpiCreationTest : StringSpec({
+class XofClientSpiTest : StringSpec({
 
     "should XofClient.newInstance() create a new XofClient with the default configuration" {
         val client = XofClient.newInstance()
+
         client shouldNotBe null
     }
 
-    "should XofClient.overriding() create a new XofClient with the custom configuration" {
+    "should XofClient.overriding() create a new XofClient with a custom configuration" {
         val client = XofClient.overriding {
             connection {
                 readTimeout = 30.seconds

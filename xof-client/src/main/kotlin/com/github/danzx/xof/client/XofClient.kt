@@ -6,6 +6,7 @@ import com.github.danzx.xof.client.api.PostsApi
 import com.github.danzx.xof.client.api.UsersApi
 import com.github.danzx.xof.client.configuration.XofClientConfiguration
 import com.github.danzx.xof.client.configuration.dsl.XofClientConfigurationBuilder
+import com.github.danzx.xof.client.exceptions.XofClientException
 
 import java.util.ServiceLoader
 
@@ -29,6 +30,9 @@ data class XofClient(
         }
 
         private fun spiCreate(config: XofClientConfiguration = XofClientConfigurationBuilder().build()) =
-            ServiceLoader.load(XofClientFactory::class.java).first().create(config)
+            ServiceLoader.load(XofClientFactory::class.java)
+                .findFirst()
+                .orElseThrow { XofClientException("XofClientFactory implementation not found") }
+                .create(config)
     }
 }
