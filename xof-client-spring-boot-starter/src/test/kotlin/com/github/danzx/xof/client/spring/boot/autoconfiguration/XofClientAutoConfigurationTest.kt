@@ -25,7 +25,7 @@ import ru.yole.kxdate.seconds
 import java.util.Optional
 
 @SpringBootTest(
-    "xof-client.base-url=http://localhost:8081/api/v1/",
+    "xof-client.base-url=http://localhost:8080/api/v1/",
     "xof-client.connection.read-timeout=3m",
     "xof-client.connection.write-timeout=200ms",
     "xof-client.connection.connect-timeout=30s",
@@ -41,13 +41,12 @@ class XofClientAutoConfigurationTest {
 
     @Autowired lateinit var properties: Optional<XofClientProperties>
     @Autowired lateinit var xofClient: Optional<XofClient>
-    @Autowired lateinit var xofClientFactory: Optional<XofClientFactory>
 
     @Test
     fun `should auto-configuration must create properties`() {
         properties.isPresent shouldBe true
         properties.get() should {
-            it.baseUrl shouldBe "http://localhost:8081/api/v1/"
+            it.baseUrl shouldBe "http://localhost:8080/api/v1/"
             it.connection.readTimeout shouldBe 3.minutes
             it.connection.writeTimeout shouldBe 200.milliseconds
             it.connection.connectTimeout shouldBe 30.seconds
@@ -62,11 +61,6 @@ class XofClientAutoConfigurationTest {
     @Test
     fun `should auto-configuration must create XofClient`() {
         xofClient.isPresent shouldBe true
-    }
-
-    @Test
-    fun `should auto-configuration must create XofClientFactory`() {
-        xofClientFactory.isPresent shouldBe true
     }
 
     @Configuration

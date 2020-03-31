@@ -1,5 +1,6 @@
 package com.github.danzx.xof.client.configuration.dsl
 
+import com.github.danzx.xof.client.configuration.XofClientConfiguration
 import com.github.danzx.xof.client.configuration.XofClientConfiguration.Logger.Level.BASIC
 import com.github.danzx.xof.client.ext.megabytes
 
@@ -14,7 +15,7 @@ import ru.yole.kxdate.seconds
 
 class XofClientConfigurationDslTest : StringSpec({
 
-    "xofClientConfig DSL should build XofClientConfiguration object" {
+    "XofClientConfiguration DSL should build XofClientConfiguration object" {
         val config = config {
             connection {
                 readTimeout = 30.seconds
@@ -22,12 +23,12 @@ class XofClientConfigurationDslTest : StringSpec({
                 connectTimeout = 1.minutes
                 callTimeout = 100.nanoseconds
             }
-            baseUrl = "http://localhost:8080/"
+            baseUrl = "http://localhost:8080/api/v1/"
             logger { level = BASIC }
             cache { size = 20.megabytes }
         }
 
-        config.baseUrl shouldBe "http://localhost:8080/"
+        config.baseUrl shouldBe "http://localhost:8080/api/v1/"
 
         config.connection should  {
             it.readTimeout shouldBe 30.seconds
@@ -46,4 +47,11 @@ class XofClientConfigurationDslTest : StringSpec({
             it.sizeInBytes shouldBe 20.megabytes
         }
     }
+
 })
+
+private fun config(setup: XofClientConfigurationBuilder.() -> Unit): XofClientConfiguration {
+    val builder = XofClientConfigurationBuilder()
+    builder.setup()
+    return builder.build()
+}

@@ -16,7 +16,7 @@ class XofClientConfigurationBuilder {
     private var logger: Logger = LoggerConfigBuilder().build()
     private var cache: Cache = CacheConfigBuilder().build()
 
-    lateinit var baseUrl: String
+    var baseUrl: String = "https://xof.herokuapp.com/api/v1/"
 
     fun connection(setup: ConnectionConfigBuilder.() -> Unit) {
         val builder = ConnectionConfigBuilder()
@@ -37,10 +37,4 @@ class XofClientConfigurationBuilder {
     }
 
     fun build(): XofClientConfiguration = XofClientConfigurationImpl(connection, logger, cache, baseUrl)
-}
-
-fun config(setup: XofClientConfigurationBuilder.() -> Unit): XofClientConfiguration {
-    val builder = XofClientConfigurationBuilder()
-    builder.setup()
-    return builder.build()
 }

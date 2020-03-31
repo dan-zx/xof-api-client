@@ -1,5 +1,6 @@
 package com.github.danzx.xof.client.impl.retrofit
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -28,47 +29,48 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 
 import java.io.File
 
-class XofClientRetrofitFactory(configuration: XofClientConfiguration) : XofClientFactory(configuration) {
+class XofClientRetrofitFactory : XofClientFactory {
 
-    override fun create(): XofClient {
-        val retrofit = buildRetrofit()
+    override fun create(configuration: XofClientConfiguration): XofClient {
+        val retrofit = buildRetrofit(configuration)
         return createXofClient(retrofit)
     }
 
-    private fun buildRetrofit() = 
+    private fun buildRetrofit(configuration: XofClientConfiguration) =
         Retrofit.Builder()
             .baseUrl(configuration.baseUrl)
             .addConverterFactory(buildJsonConverterFactory() )
-            .client(buildOkHttpClient())
+            .client(buildOkHttpClient(configuration))
             .build()
 
     private fun buildJsonConverterFactory() =
         JacksonConverterFactory.create(
             ObjectMapper()
+                .setSerializationInclusion(Include.NON_NULL)
                 .registerModule(KotlinModule())
                 .registerModule(JavaTimeModule()))
 
-    private fun buildOkHttpClient(): OkHttpClient {
+    private fun buildOkHttpClient(configuration: XofClientConfiguration): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .readTimeout(configuration.connection.readTimeout)
             .writeTimeout(configuration.connection.writeTimeout)
             .connectTimeout(configuration.connection.connectTimeout)
             .callTimeout(configuration.connection.callTimeout)
 
-        if (configuration.logger.isEnabled) configureLogging(builder)
-        if (configuration.cache.isEnabled) configureCache(builder)
+        if (configuration.logger.isEnabled) configureLogging(builder, configuration)
+        if (configuration.cache.isEnabled) configureCache(builder, configuration)
 
         return builder.build()
     }
 
-    private fun configureLogging(okHttpClientBuilder: OkHttpClient.Builder) {
+    private fun configureLogging(okHttpClientBuilder: OkHttpClient.Builder, configuration: XofClientConfiguration) {
         val slf4jLogger = LoggerFactory.getLogger(HttpLoggingInterceptor::class.java)
         val interceptor = HttpLoggingInterceptor(slf4jLogger::info)
         interceptor.level = Level.valueOf(configuration.logger.level.name)
         okHttpClientBuilder.addNetworkInterceptor(interceptor)
     }
 
-    private fun configureCache(okHttpClientBuilder: OkHttpClient.Builder) {
+    private fun configureCache(okHttpClientBuilder: OkHttpClient.Builder, configuration: XofClientConfiguration) {
         val tempDirectory = File.createTempFile("okhttp-cache", ".tmp")
         val cache = Cache(tempDirectory, configuration.cache.sizeInBytes)
         okHttpClientBuilder.cache(cache)

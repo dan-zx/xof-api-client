@@ -19,7 +19,7 @@ data class XofClientProperties(
     override val connection: ConnectionProperties = ConnectionProperties(),
     override val logger: LoggerProperties = LoggerProperties(),
     override val cache: CacheProperties = CacheProperties(),
-    override val baseUrl: String) : XofClientConfiguration {
+    override val baseUrl: String = "https://xof.herokuapp.com/api/v1/") : XofClientConfiguration {
 
     @ConstructorBinding
     data class ConnectionProperties(

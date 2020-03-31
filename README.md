@@ -4,103 +4,97 @@
 [![Build Status](https://api.travis-ci.com/dan-zx/xof-api-client.svg?branch=develop)](https://travis-ci.com/dan-zx/xof-api-client)
 [![License](https://img.shields.io/badge/licence-Apache_Licence_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-Client to use the XOF API in Kotlin/Java applications
-
-Modules
--------
-
-* `xof-client`: contains the client abstract API
-* `xof-client-core`: implements the client API (currently with Retrofit)
-* `xof-client-spring-boot-starter`: Spring auto-configuration to integrate the client into Spring applications
-
-Prerequisites
--------------
-
-  * JDK11+
-
-Build the project
------------------
-
-```sh
-$ ./gradlew clean build
-```
+Client to use the XOF API in Kotlin/Java(11+) applications
 
 Usage
 -----
 
-## Without Spring Boot
+## In plain Kotlin applications
 
 1. Download the latest `xof-client-core` JAR via Maven:
 
-  ```xml
-  <dependency>
-    <groupId>com.github.danzx.xof</groupId>
-    <artifactId>xof-client-core</artifactId>
-    <version>${version}</version>
-  </dependency>
-  ```
+    ```xml
+    <dependency>
+      <groupId>com.github.danzx.xof</groupId>
+      <artifactId>xof-client-core</artifactId>
+      <version>${version}</version>
+    </dependency>
+    ```
 
-  or Gradle:
+    or Gradle:
 
-  ```groovy
-  implementation "com.github.danzx.xof:xof-client-core:${version}"
-  ```
+    ```groovy
+    implementation "com.github.danzx.xof:xof-client-core:${version}"
+    ```
 
-2. Configure a client factory to create a new instance of the client
+2. Create a new instance of the client with the default configuration
 
-  > The only required configuration parameter is the baseUrl
+    ```kotlin
+    val client = XofClient.newInstance()
+    ```
 
-  ```kotlin
-  val client = XofClientRetrofitFactory(
-    config {
-      baseUrl = "http://localhost:8080/"
-      // Default values
-      logger { level = NONE }
-      cache { size = 10.megabytes }
-      connection {
-        readTimeout = 10.seconds
-        writeTimeout = 10.seconds
-        connectTimeout = 10.seconds
-        callTimeout = 0.nanoseconds
+    Or by overriding the default configuration
+
+    ```kotlin
+    // Default values
+    val client = XofClient.overriding {
+        baseUrl = "https://xof.herokuapp.com/api/v1/"
+        logger { level = NONE }
+        cache { size = 10.megabytes }
+        connection {
+          readTimeout = 10.seconds
+          writeTimeout = 10.seconds
+          connectTimeout = 10.seconds
+          callTimeout = 0.nanoseconds
+        }
       }
-    })
-    .create()
-  ```
+    ```
 
 3. Use the client
 
-  ```kotlin
-  if (client.isServiceAvailable) {
-    val user = client.usersApi.getByUsername("username")
-  }
-  ```
+    ```kotlin
+    if (client.isServiceAvailable) {
+      val user = client.usersApi.getByUsername("username")
+    }
+    ```
 
 ## In Spring Boot applications
 
 1. Download the latest `xof-client-spring-boot-starter` JAR via Maven:
 
-  ```xml
-  <dependency>
-    <groupId>com.github.danzx.xof</groupId>
-    <artifactId>xof-client-spring-boot-starter</artifactId>
-    <version>${version}</version>
-  </dependency>
-  ```
+    ```xml
+    <dependency>
+      <groupId>com.github.danzx.xof</groupId>
+      <artifactId>xof-client-spring-boot-starter</artifactId>
+      <version>${version}</version>
+    </dependency>
+    ```
 
-  or Gradle:
+    or Gradle:
 
-  ```groovy
-  implementation "com.github.danzx.xof:xof-client-spring-boot-starter:${version}"
-  ```
+    ```groovy
+    implementation "com.github.danzx.xof:xof-client-spring-boot-starter:${version}"
+    ```
 
-2. Configure the client using `application.properties`
+2. Inject the client in your bean
 
-  > The only required configuration parameter is the base-url
+    ```kotlin
+    @Autowired lateinit var client: XofClient
+    ```
+
+3. Use the client
+
+    ```kotlin
+    if (client.isServiceAvailable) {
+      val user = client.usersApi.getByUsername("username")
+    }
+    ```
+
+  > Optionally you can override the default configuration using the `application.properties`
 
   ```properties
-  xof-client.base-url=http://localhost:8081/api/v1/
-
   # Default values
+  xof-client.base-url=https://xof.herokuapp.com/api/v1/
   xof-client.connection.read-timeout=10s
   xof-client.connection.write-timeout=10s
   xof-client.connection.connect-timeout=10s
@@ -111,11 +105,20 @@ Usage
   xof-client.cache.size=10MB
   ```
 
-3. Inject the client in your bean
+Project info
+------------
 
-  ```kotlin
-  @Autowired lateinit var client: XofClient
-  ```
+## Modules
+
+* `xof-client`: contains the client abstract API and SPI contract
+* `xof-client-core`: implements the client (currently with Retrofit)
+* `xof-client-spring-boot-starter`: Spring auto-configuration to integrate the client into Spring applications
+
+## Build the project
+
+```sh
+$ ./gradlew clean build
+```
 
 License
 -------
