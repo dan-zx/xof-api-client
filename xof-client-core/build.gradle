@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+ext.jacocoExcludes = []
+
+dependencies {
+    api project(':xof-client')
+    api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
+    api "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
+    api "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    api "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
+
+    testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
+}
