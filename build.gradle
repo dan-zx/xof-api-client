@@ -24,7 +24,7 @@ subprojects {
     apply plugin: 'nl.fabianm.kotlin.plugin.generated'
 
     group 'com.github.danzx.xof'
-    version '1.0-SNAPSHOT'
+    version '1.0'
     sourceCompatibility = JavaVersion.VERSION_11
 
     repositories {

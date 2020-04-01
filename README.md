@@ -1,4 +1,4 @@
-# XOF API client v1.0-SNAPSHOT
+# XOF API client v1.0
 
 [![Coverage](https://codecov.io/gh/dan-zx/xof-api-client/branch/develop/graph/badge.svg)](https://codecov.io/gh/dan-zx/xof-api-client)
 [![Build Status](https://api.travis-ci.com/dan-zx/xof-api-client.svg?branch=develop)](https://travis-ci.com/dan-zx/xof-api-client)
