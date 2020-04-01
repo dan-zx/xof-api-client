@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'org.jetbrains.kotlin.kapt'
     id 'org.jetbrains.kotlin.plugin.spring'
 }
 
@@ -10,8 +11,8 @@ dependencies {
 
     compileOnly "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
 
-    annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor:$springBootVersion"
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
+    kapt "org.springframework.boot:spring-boot-autoconfigure-processor:$springBootVersion"
+    kapt "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
 
     testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 }
