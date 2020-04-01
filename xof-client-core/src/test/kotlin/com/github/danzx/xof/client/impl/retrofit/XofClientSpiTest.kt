@@ -2,6 +2,7 @@ package com.github.danzx.xof.client.impl.retrofit
 
 import com.github.danzx.xof.client.XofClient
 import com.github.danzx.xof.client.configuration.XofClientConfiguration.Logger.Level.BASIC
+import com.github.danzx.xof.client.configuration.dsl.config
 import com.github.danzx.xof.client.ext.megabytes
 
 import io.kotlintest.shouldNotBe
@@ -20,7 +21,7 @@ class XofClientSpiTest : StringSpec({
     }
 
     "should XofClient.overriding() create a new XofClient with a custom configuration" {
-        val client = XofClient.overriding {
+        val client = XofClient.newInstance(config {
             connection {
                 readTimeout = 30.seconds
                 writeTimeout = 10.seconds
@@ -30,7 +31,7 @@ class XofClientSpiTest : StringSpec({
             baseUrl = "http://localhost:8080/api/v1/"
             logger { level = BASIC }
             cache { size = 20.megabytes }
-        }
+        })
 
         client shouldNotBe null
     }

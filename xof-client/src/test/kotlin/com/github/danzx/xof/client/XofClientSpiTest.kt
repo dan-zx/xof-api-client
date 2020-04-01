@@ -1,5 +1,6 @@
 package com.github.danzx.xof.client
 
+import com.github.danzx.xof.client.configuration.dsl.config
 import com.github.danzx.xof.client.exceptions.XofClientException
 
 import io.kotlintest.shouldThrow
@@ -13,7 +14,7 @@ class XofClientSpiTest : StringSpec({
         shouldThrow<XofClientException> { XofClient.newInstance() }
     }
 
-    "should overriding() throw XofClientException when no XofClientFactory implementation is found by SPI" {
-        shouldThrow<XofClientException> { XofClient.overriding {  } }
+    "should newInstance(config) throw XofClientException when no XofClientFactory implementation is found by SPI" {
+        shouldThrow<XofClientException> { XofClient.newInstance(config {  } ) }
     }
 })

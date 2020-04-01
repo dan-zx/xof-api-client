@@ -37,7 +37,7 @@ Usage
 
     ```kotlin
     // Default values
-    val client = XofClient.overriding {
+    val client = XofClient.newInstance(config {
         baseUrl = "https://xof.herokuapp.com/api/v1/"
         logger { level = NONE }
         cache { size = 10.megabytes }
@@ -47,7 +47,7 @@ Usage
           connectTimeout = 10.seconds
           callTimeout = 0.nanoseconds
         }
-      }
+      })
     ```
 
 3. Use the client

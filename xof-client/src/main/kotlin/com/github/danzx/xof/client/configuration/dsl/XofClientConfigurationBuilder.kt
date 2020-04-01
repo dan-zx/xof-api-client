@@ -38,3 +38,9 @@ class XofClientConfigurationBuilder {
 
     fun build(): XofClientConfiguration = XofClientConfigurationImpl(connection, logger, cache, baseUrl)
 }
+
+fun config(setup: XofClientConfigurationBuilder.() -> Unit): XofClientConfiguration {
+    val builder = XofClientConfigurationBuilder()
+    builder.setup()
+    return builder.build()
+}

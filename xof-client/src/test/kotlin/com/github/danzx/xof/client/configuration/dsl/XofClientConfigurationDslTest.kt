@@ -1,6 +1,5 @@
 package com.github.danzx.xof.client.configuration.dsl
 
-import com.github.danzx.xof.client.configuration.XofClientConfiguration
 import com.github.danzx.xof.client.configuration.XofClientConfiguration.Logger.Level.BASIC
 import com.github.danzx.xof.client.ext.megabytes
 
@@ -49,9 +48,3 @@ class XofClientConfigurationDslTest : StringSpec({
     }
 
 })
-
-private fun config(setup: XofClientConfigurationBuilder.() -> Unit): XofClientConfiguration {
-    val builder = XofClientConfigurationBuilder()
-    builder.setup()
-    return builder.build()
-}

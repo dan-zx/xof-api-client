@@ -21,15 +21,11 @@ data class XofClient(
 
 
     companion object {
-        fun newInstance() = spiCreate()
+        @JvmStatic
+        fun newInstance(config: XofClientConfiguration = XofClientConfigurationBuilder().build()) = spiCreate(config)
 
-        fun overriding(setup: XofClientConfigurationBuilder.() -> Unit): XofClient {
-            val configBuilder = XofClientConfigurationBuilder()
-            configBuilder.setup()
-            return spiCreate(configBuilder.build())
-        }
-
-        private fun spiCreate(config: XofClientConfiguration = XofClientConfigurationBuilder().build()) =
+        @JvmStatic
+        private fun spiCreate(config: XofClientConfiguration) =
             ServiceLoader.load(XofClientFactory::class.java)
                 .findFirst()
                 .orElseThrow { XofClientException("XofClientFactory implementation not found") }
