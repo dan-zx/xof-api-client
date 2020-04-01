@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'org.jetbrains.kotlin.plugin.spring'
+}
+
+ext.jacocoExcludes = []
+
+dependencies {
+    api project(':xof-client-core')
+
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
+
+    kapt "org.springframework.boot:spring-boot-autoconfigure-processor:$springBootVersion"
+    kapt "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+}
